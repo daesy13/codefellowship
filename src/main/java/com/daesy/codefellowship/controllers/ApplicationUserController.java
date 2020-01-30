@@ -28,10 +28,12 @@ public class ApplicationUserController {
     private PasswordEncoder passwordEncoder;
 
     @PostMapping("/signup")
-    public RedirectView createNewApplicationUser(String username, String password){
-        System.out.println("You are adding a user");
+    public RedirectView createNewApplicationUser(String username, String password, String firstName, String lastName,
+                                                 String dayOfBirth, String bio){
+        // System.out.println("You are adding a user");
         // make the user AND here we activate the salt and hash for the password
-        ApplicationUser newUser = new ApplicationUser(username, passwordEncoder.encode(password));
+        ApplicationUser newUser = new ApplicationUser(username, passwordEncoder.encode(password), firstName, lastName
+                , dayOfBirth, bio);
 
         // save the user to db
         applicationUserRepository.save(newUser);
@@ -49,14 +51,25 @@ public class ApplicationUserController {
         return "login";
     }
 
+    // Principal p is the current user
     @GetMapping("/users/{id}")
     public String showUserDetails(@PathVariable long id, Principal p, Model m){
         ApplicationUser theUser = applicationUserRepository.findById(id).get();
 
         // set attribute on Model
-        m.addAttribute("usernameWeAreVisiting", theUser.getUsername());
-        m.addAttribute("principalTheAndroid", p.getName());
-        return "myprofile";
+        m.addAttribute("usernameWeAreVisiting", theUser);
+//        m.addAttribute("userIdWeAreVisiting", theUser.id);
+//        m.addAttribute("userWeAreVisiting", theUser);
+        m.addAttribute("principalName", p.getName());
+        return "public-view";
+    }
+
+    @GetMapping("/myprofile")
+    public String showMyProfile(Principal p, Model m){
+        ApplicationUser loggedInUser = applicationUserRepository.findByUsername(p.getName());
+
+        m.addAttribute("user", loggedInUser);
+        return "my-profile";
     }
 
 //    @PostMapping("/login")
