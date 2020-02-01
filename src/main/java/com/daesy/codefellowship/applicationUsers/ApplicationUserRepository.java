@@ -1,4 +1,4 @@
-package com.daesy.codefellowship.models;
+package com.daesy.codefellowship.applicationUsers;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 

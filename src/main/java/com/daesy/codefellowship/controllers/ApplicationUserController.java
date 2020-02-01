@@ -1,7 +1,7 @@
 package com.daesy.codefellowship.controllers;
 
-import com.daesy.codefellowship.models.ApplicationUser;
-import com.daesy.codefellowship.models.ApplicationUserRepository;
+import com.daesy.codefellowship.applicationUsers.ApplicationUser;
+import com.daesy.codefellowship.applicationUsers.ApplicationUserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -43,7 +43,7 @@ public class ApplicationUserController {
         SecurityContextHolder.getContext().setAuthentication(authentication);
 
         // send them back home
-        return new RedirectView("/");
+        return new RedirectView("/myprofile");
     }
 
     @GetMapping("/login")
@@ -69,7 +69,7 @@ public class ApplicationUserController {
         ApplicationUser loggedInUser = applicationUserRepository.findByUsername(p.getName());
 
         m.addAttribute("user", loggedInUser);
-        return "my-profile";
+        return "myprofile";
     }
 
 //    @PostMapping("/login")
