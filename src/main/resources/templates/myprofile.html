@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Profile</title>
+    <title>My Profile</title>
 </head>
 <body>
     <nav>
@@ -13,17 +13,21 @@
             </li>
         </ul>
     </nav>
-    <h1>Hello, [[${principalName}]] you are visiting, [[${usernameWeAreVisiting.username}]]'s profile !</h1>
 
-    <ul th:each="post : ${usernameWeAreVisiting.posts}">
+    <h1>Hi! [[${user.firstName}]]</h1>
+
+    <form action="/post" method="POST">
+        <h2>What are you thinking today?</h2>
+        Post: <textarea type="text" name="body"></textarea>
+        <input type="submit" value="Submit">
+    </form>
+
+    <ul th:each="post : ${user.posts}">
         <li>
             <span th:text="${post.body}"></span>
             <span th:text="${post.timeStamp}"></span>
 
         </li>
     </ul>
-
-    <img src="/images/user-icon-image-placeholder.jpg">
-
 </body>
 </html>

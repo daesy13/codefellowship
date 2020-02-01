@@ -1,6 +1,6 @@
 package com.daesy.codefellowship.config;
 
-import com.daesy.codefellowship.models.ApplicationUserRepository;
+import com.daesy.codefellowship.applicationUsers.ApplicationUserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;

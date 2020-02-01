@@ -1,5 +1,6 @@
-package com.daesy.codefellowship.models;
+package com.daesy.codefellowship.applicationUsers;
 
+import com.daesy.codefellowship.post.Post;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -12,7 +13,7 @@ public class ApplicationUser implements UserDetails {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    long id;
+    Long id;
 
     // matches the property on the other class
 //    @OneToMany()
@@ -22,13 +23,23 @@ public class ApplicationUser implements UserDetails {
 //        return this.user;
 //    }
 
-    String username;
-    String password;
-    String firstName;
-    String lastName;
-    String dayOfBirth;
-    String bio;
+    public String username;
+    public String password;
+    public String firstName;
+    public String lastName;
+    public String dayOfBirth;
+    public String bio;
 
+    @OneToMany(mappedBy = "applicationUser")
+    public List<Post> posts;
+
+    public List<Post> getPosts(){
+        return posts;
+    }
+
+    public void setPosts(List<Post> posts) {
+        this.posts = posts;
+    }
 
     public ApplicationUser(){};
 
@@ -42,7 +53,7 @@ public class ApplicationUser implements UserDetails {
         this.bio = bio;
     }
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
@@ -97,4 +108,5 @@ public class ApplicationUser implements UserDetails {
     public boolean isEnabled() {
         return true;
     }
+
 }

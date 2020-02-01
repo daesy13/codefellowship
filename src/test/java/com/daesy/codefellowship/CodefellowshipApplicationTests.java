@@ -1,7 +1,6 @@
 package com.daesy.codefellowship;
 
 import com.daesy.codefellowship.controllers.ApplicationUserController;
-import com.daesy.codefellowship.models.ApplicationUser;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
