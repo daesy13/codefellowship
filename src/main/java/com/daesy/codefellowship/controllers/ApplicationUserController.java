@@ -16,6 +16,7 @@ import org.springframework.web.servlet.view.RedirectView;
 
 import java.security.Principal;
 import java.util.ArrayList;
+import java.util.List;
 
 @Controller
 public class ApplicationUserController {
@@ -55,12 +56,15 @@ public class ApplicationUserController {
     @GetMapping("/users/{id}")
     public String showUserDetails(@PathVariable long id, Principal p, Model m){
         ApplicationUser theUser = applicationUserRepository.findById(id).get();
+        ApplicationUser loggedInUser = applicationUserRepository.findByUsername(p.getName());
+
 
         // set attribute on Model
         m.addAttribute("usernameWeAreVisiting", theUser);
 //        m.addAttribute("userIdWeAreVisiting", theUser.id);
 //        m.addAttribute("userWeAreVisiting", theUser);
         m.addAttribute("principalName", p.getName());
+        m.addAttribute("loggedInUser", loggedInUser);
         return "public-view";
     }
 
@@ -72,8 +76,36 @@ public class ApplicationUserController {
         return "myprofile";
     }
 
-//    @PostMapping("/login")
-//    public RedirectView login(){
-//        return new RedirectView("/");
-//    }
+   @GetMapping("/allusers")
+    public String showUsers(Principal p, Model m){
+        List<ApplicationUser> users = applicationUserRepository.findAll();
+        ApplicationUser loggedInUser = applicationUserRepository.findByUsername(p.getName());
+        if (users.contains(loggedInUser)) {
+            users.remove(loggedInUser);
+        }
+        m.addAttribute("users", users);
+        m.addAttribute("principalName", p.getName());
+        return "users";
+   }
+
+    @GetMapping("/feed")
+    public String showFeed(Principal p, Model m) {
+        List<ApplicationUser> users = applicationUserRepository.findAll();
+        ApplicationUser loggedInUser = applicationUserRepository.findByUsername(p.getName());
+        if (users.contains(loggedInUser)) {
+            users.remove(loggedInUser);
+        }
+        m.addAttribute("users", users);
+        m.addAttribute("principalName", p.getName());
+        return "feed";
+    }
+
+    @PostMapping("/follow/{id}")
+    public RedirectView follow(@PathVariable long id, Principal p, Model m){
+        ApplicationUser personToBeFollow = applicationUserRepository.findById(id).get();
+        ApplicationUser loggedInUser = applicationUserRepository.findByUsername(p.getName());
+        loggedInUser.PeopleIamFollowing.add(personToBeFollow);
+        applicationUserRepository.save(loggedInUser);
+        return new RedirectView("/users/"+id);
+    }
 }
