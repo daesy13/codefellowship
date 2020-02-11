@@ -26,11 +26,11 @@ class CodefellowshipApplicationTests {
 	void contextLoads() {
 	}
 
-	@Test
-	public void shouldHaveAGoodHomePage() throws Exception {
-		this.mockMvc.perform(get("/"))
-				.andDo(print())
-				.andExpect(status().isOk())
-				.andExpect(content().string(containsString("<h2>Sign up new users here</h2>")));
-	}
+//	@Test
+//	public void shouldHaveAGoodHomePage() throws Exception {
+//		this.mockMvc.perform(get("/"))
+//				.andDo(print())
+//				.andExpect(status().isOk())
+//				.andExpect(content().string(containsString("<h2>Sign up new users here</h2>")));
+//	}
 }

@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <nav>
+        <ul>
+            <li>
+                <a href="/">Home</a>
+                <a href="/logout">Log out</a>
+            </li>
+        </ul>
+    </nav>
+
+    <ul th:each="user : ${users}">
+        <li>
+            <a th:href="${'/users/'+ user.id}"> <span th:text="${user.firstName}"></span></a>
+        </li>
+    </ul>
+
+</body>
+</html>
